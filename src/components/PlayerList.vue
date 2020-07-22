@@ -9,7 +9,10 @@
         }"
         v-for="player in $root.room.players"
       >
-        {{ player.id }} ({{ displayRole(player) }}) -
+        {{ player.name }} ({{ displayRole(player) }})
+        <span v-if="player.id === $root.game.attackerId">&#9876;</span>
+        <span v-if="player.id === $root.game.defenderId">&#128737;</span>
+        -
         <span :class="$style.loss">{{ player.lossCount }}</span>
       </li>
     </ul>

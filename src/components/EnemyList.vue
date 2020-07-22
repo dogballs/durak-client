@@ -11,8 +11,14 @@
         <div :class="$style.icon">
           &#x1F464;
         </div>
+        <span :class="$style.sign" v-if="enemy.id === $root.game.attackerId"
+          >&#9876;</span
+        >
+        <span :class="$style.sign" v-if="enemy.id === $root.game.defenderId"
+          >&#128737;</span
+        >
         <div :class="$style.name">
-          {{ enemy.id }}
+          {{ enemy.name }}
         </div>
       </div>
     </div>
@@ -64,6 +70,7 @@ export default {
 .player {
   width: 150px;
   opacity: 0.5;
+  position: absolute;
 }
 
 .current {
@@ -105,7 +112,13 @@ export default {
 .inside {
   width: 100%;
   height: 100%;
-  /*background: #000;*/
+}
+
+.sign {
+  position: absolute;
+  font-size: 30px;
+  top: 51px;
+  left: 63px;
 }
 
 .cardSmall {

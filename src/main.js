@@ -3,6 +3,13 @@ import Vue from 'vue';
 import './assets/styles/global.css';
 
 import App from './components/App';
+import ConnectionStatus from './components/ConnectionStatus';
+
+const ConnectionState = {
+  Initiating: 1,
+  Failed: 2,
+  Completed: 3,
+};
 
 const app = new Vue({
   data() {
@@ -35,7 +42,7 @@ const app = new Vue({
         cards: [],
       },
       ws: null,
-      isConnected: false,
+      state: ConnectionState.Initiating,
     };
   },
 
@@ -90,16 +97,38 @@ const app = new Vue({
     isPlayerPasser() {
       return this.player.id === this.game.passerId;
     },
+    isConnectionInitiating() {
+      return this.state === ConnectionState.Initiating;
+    },
+    isConnectionFailed() {
+      return this.state === ConnectionState.Failed;
+    },
   },
 
   mounted() {
     this.ws = new WebSocket('ws://localhost:8081');
 
-    // const name = window.prompt('Enter your name');
+    this.ws.addEventListener('error', () => {
+      this.state = ConnectionState.Failed;
+    });
+
+    this.ws.addEventListener('close', () => {
+      this.state = ConnectionState.Failed;
+    });
 
     this.ws.addEventListener('open', () => {
-      this.isConnected = true;
-      this.ws.send(JSON.stringify({ id: 'register' }));
+      let name = window.sessionStorage.getItem('durak.name');
+
+      while (!name) {
+        name = window.prompt('Enter your name');
+      }
+
+      name = name.substr(0, 20);
+
+      window.sessionStorage.setItem('durak.name', name);
+
+      this.state = ConnectionState.Completed;
+      this.ws.send(JSON.stringify({ id: 'register', name }));
     });
 
     this.ws.addEventListener('message', (ev) => {
@@ -130,8 +159,8 @@ const app = new Vue({
   },
 
   render(h) {
-    if (!this.isConnected) {
-      return 'Loading...';
+    if (this.state !== ConnectionState.Completed) {
+      return h(ConnectionStatus);
     }
 
     return h(App);
