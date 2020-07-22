@@ -106,7 +106,7 @@ const app = new Vue({
   },
 
   mounted() {
-    this.ws = new WebSocket('ws://dogballs-durak-server.herokuapp.com');
+    this.ws = new WebSocket('wss://dogballs-durak-server.herokuapp.com');
 
     this.ws.addEventListener('error', () => {
       this.state = ConnectionState.Failed;
