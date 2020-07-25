@@ -1,9 +1,10 @@
+const webpack = require('webpack');
 const path = require('path');
 
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
-const rootDir = path.join(__dirname);
+const rootDir = path.join(__dirname, '..');
 
 const config = {
   mode: 'development',
@@ -48,6 +49,12 @@ const config = {
       hash: true,
     }),
     new VueLoaderPlugin(),
+    new webpack.DefinePlugin({
+      'process.env.API_BASE_URL':
+        process.env.NODE_ENV === 'production'
+          ? '"https://dogballs-durak-server.herokuapp.com"'
+          : '"http://localhost:3000"',
+    }),
   ],
   resolve: {
     extensions: ['.js', '.vue', '.json'],

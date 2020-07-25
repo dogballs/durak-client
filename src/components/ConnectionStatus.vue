@@ -15,7 +15,6 @@
   flex: 1;
   display: flex;
   justify-content: center;
-  padding-top: 100px;
   font-size: 30px;
   text-align: center;
 }

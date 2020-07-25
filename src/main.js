@@ -1,17 +1,34 @@
 import Vue from 'vue';
+import VueRouter from 'vue-router';
 
 import './assets/styles/global.css';
 
 import App from './components/App';
+import HomePage from './components/HomePage';
+import RoomPage from './components/RoomPage';
 import ConnectionStatus from './components/ConnectionStatus';
 
+const routes = [
+  { path: '/', component: HomePage },
+  { path: '/room/:id', component: RoomPage },
+];
+
+const router = new VueRouter({
+  routes,
+});
+
 const ConnectionState = {
+  Idle: 0,
   Initiating: 1,
   Failed: 2,
   Completed: 3,
 };
 
+Vue.use(VueRouter);
+
 const app = new Vue({
+  router,
+
   data() {
     return {
       room: {
@@ -41,8 +58,9 @@ const app = new Vue({
       hand: {
         cards: [],
       },
+      messages: [],
       ws: null,
-      state: ConnectionState.Initiating,
+      state: ConnectionState.Idle,
     };
   },
 
@@ -103,66 +121,84 @@ const app = new Vue({
     isConnectionFailed() {
       return this.state === ConnectionState.Failed;
     },
+    isConnectionCompleted() {
+      return this.state === ConnectionState.Completed;
+    },
   },
 
-  mounted() {
-    this.ws = new WebSocket('wss://dogballs-durak-server.herokuapp.com');
-
-    this.ws.addEventListener('error', () => {
-      this.state = ConnectionState.Failed;
-    });
-
-    this.ws.addEventListener('close', () => {
-      this.state = ConnectionState.Failed;
-    });
-
-    this.ws.addEventListener('open', () => {
-      let name = window.sessionStorage.getItem('durak.name');
-
-      while (!name) {
-        name = window.prompt('Enter your name');
-      }
-
-      name = name.substr(0, 20);
-
-      window.sessionStorage.setItem('durak.name', name);
-
-      this.state = ConnectionState.Completed;
-      this.ws.send(JSON.stringify({ id: 'register', name }));
-    });
-
-    this.ws.addEventListener('message', (ev) => {
-      const message = JSON.parse(ev.data);
-      console.log('message', message);
-
-      if (message.id === 'player') {
-        this.player = message.player;
+  methods: {
+    connect() {
+      if (this.state !== ConnectionState.Idle) {
         return;
       }
+      this.state = ConnectionState.Initiating;
 
-      if (message.id === 'room') {
-        this.room = message.room;
-        return;
-      }
+      const parts = window.location.hash.split('/');
+      const roomId = parts[parts.length - 1];
 
-      if (message.id === 'game') {
-        this.game = message.game;
-        this.enemies = message.enemies;
-        this.hand = message.hand;
-        this.player = message.player;
-      }
+      let url = `${process.env.API_BASE_URL}/room/${roomId}`;
+      url = url.replace('http://', 'ws://');
+      url = url.replace('https://', 'wss://');
 
-      if (message.id === 'hand') {
-        this.hand = message.hand;
-      }
-    });
+      this.ws = new WebSocket(url);
+
+      this.ws.addEventListener('error', () => {
+        this.state = ConnectionState.Failed;
+      });
+
+      this.ws.addEventListener('close', () => {
+        this.state = ConnectionState.Failed;
+      });
+
+      this.ws.addEventListener('open', () => {
+        console.log('open');
+        let name = window.sessionStorage.getItem('durak.name');
+
+        if (!name) {
+          name = window.prompt('Enter your name');
+        }
+
+        name = name.substr(0, 20);
+
+        window.sessionStorage.setItem('durak.name', name);
+
+        this.state = ConnectionState.Completed;
+        this.ws.send(JSON.stringify({ id: 'register', name }));
+      });
+
+      this.ws.addEventListener('message', (ev) => {
+        const message = JSON.parse(ev.data);
+        console.log('message', message);
+
+        if (message.id === 'player') {
+          this.player = message.player;
+          return;
+        }
+
+        if (message.id === 'room') {
+          this.room = message.room;
+          return;
+        }
+
+        if (message.id === 'game') {
+          this.game = message.game;
+          this.enemies = message.enemies;
+          this.hand = message.hand;
+          this.player = message.player;
+        }
+
+        if (message.id === 'hand') {
+          this.hand = message.hand;
+        }
+
+        if (message.id === 'log') {
+          this.messages.push(message.message);
+        }
+      });
+    },
   },
 
   render(h) {
-    if (this.state !== ConnectionState.Completed) {
-      return h(ConnectionStatus);
-    }
-
     return h(App);
   },
 });
