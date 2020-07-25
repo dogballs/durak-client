@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --config ./webpack/prod.config.js",
+    "build": "NODE_ENV=production webpack --config ./webpack/prod.config.js",
     "start": "webpack-dev-server --open --config ./webpack/dev.config.js"
   },
   "author": "Michael Radionov (https://github.com/mradionov)",

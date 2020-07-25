@@ -158,6 +158,10 @@ const app = new Vue({
           name = window.prompt('Enter your name');
         }
 
+        if (name === null) {
+          name = '';
+        }
+
         name = name.substr(0, 20);
 
         window.sessionStorage.setItem('durak.name', name);
