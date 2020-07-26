@@ -12,7 +12,7 @@ export default {
       if (!loserPlayer) {
         return 'Игрок';
       }
-      return loserPlayer.id;
+      return loserPlayer.name;
     },
     defenderPlayerName() {
       const currentPlayer = this.$root.room.players.find(
@@ -21,7 +21,7 @@ export default {
       if (!currentPlayer) {
         return 'Игрок';
       }
-      return currentPlayer.id;
+      return currentPlayer.name;
     },
     currentPlayerName() {
       const currentPlayer = this.$root.room.players.find(
@@ -30,7 +30,7 @@ export default {
       if (!currentPlayer) {
         return 'Игрок';
       }
-      return currentPlayer.id;
+      return currentPlayer.name;
     },
     text() {
       if (this.$root.room.state === 0) {
