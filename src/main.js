@@ -155,7 +155,7 @@ const app = new Vue({
         let name = window.sessionStorage.getItem('durak.name');
 
         if (!name) {
-          name = window.prompt('Enter your name');
+          name = window.prompt('Введите имя');
         }
 
         if (name === null) {

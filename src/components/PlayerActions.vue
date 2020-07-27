@@ -44,7 +44,6 @@ export default {
   justify-content: center;
   flex: 1;
   display: flex;
-  padding: 15px;
 }
 
 .button {

@@ -12,3 +12,75 @@ body {
   display: flex;
   flex-direction: column;
 }
+
+h3 {
+  color: #828282;
+}
+
+:global(.card-suite-1) {
+  background-position-y: -291px;
+}
+
+:global(.card-suite-2) {
+  background-position-y: -148px;
+}
+
+:global(.card-suite-3) {
+  background-position-y: -5px;
+}
+
+:global(.card-suite-4) {
+  background-position-y: -435px;
+}
+
+:global(.card-rank-2) {
+  background-position-x: 0px;
+}
+
+:global(.card-rank-3) {
+  background-position-x: 0px;
+}
+
+:global(.card-rank-4) {
+  background-position-x: 0px;
+}
+
+:global(.card-rank-5) {
+  background-position-x: 0px;
+}
+
+:global(.card-rank-6) {
+  background-position-x: -497px;
+}
+
+:global(.card-rank-7) {
+  background-position-x: -595px;
+}
+
+:global(.card-rank-8) {
+  background-position-x: -693px;
+}
+
+:global(.card-rank-9) {
+  background-position-x: -791px;
+}
+
+:global(.card-rank-10) {
+  background-position-x: -889px;
+}
+
+:global(.card-rank-11) {
+  background-position-x: -987px;
+}
+
+:global(.card-rank-12) {
+  background-position-x: -1085px;
+}
+
+:global(.card-rank-13) {
+  background-position-x: -1183px;
+}
+
+:global(.card-rank-14) {
+  background-position-x: -8px;
+}

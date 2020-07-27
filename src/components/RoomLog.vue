@@ -1,8 +1,10 @@
 <template>
   <div>
-    <h3>Room Log</h3>
-    <div :class="$style.message" v-for="message in $root.messages">
-      - {{ message }}
+    <h3>Журнал</h3>
+    <div :class="$style.list">
+      <div :class="$style.message" v-for="message in $root.messages">
+        - {{ message }}
+      </div>
     </div>
   </div>
 </template>
@@ -11,5 +13,10 @@
 .message {
   color: #777;
   font-size: 12px;
+}
+
+.list {
+  max-height: 300px;
+  overflow-y: auto;
 }
 </style>

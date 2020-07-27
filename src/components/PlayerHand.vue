@@ -6,19 +6,19 @@
     }"
     v-if="$root.isRoomPlaying && !$root.isGameEnded"
   >
-    <span v-for="card in $root.hand.cards">
-      <Card
-        :class="{
-          [$style.card]: true,
-          [$style.cardSelectable]: $root.isPlayerCurrent,
-          [$style.cardMedium]: isCardMedium,
-          [$style.cardSmall]: isCardSmall,
-          [$style.cardTiny]: isCardTiny,
-        }"
-        :card="card"
-        @click.native="select(card)"
-      />
-    </span>
+    <Card
+      :class="{
+        [$style.card]: true,
+        [$style.cardSelectable]: $root.isPlayerCurrent,
+        [$style.cardMedium]: isCardMedium,
+        [$style.cardSmall]: isCardSmall,
+        [$style.cardTiny]: isCardTiny,
+      }"
+      :card="card"
+      @click.native="select(card)"
+      v-for="card in $root.hand.cards"
+      :key="`${card.suite}-${card.rank}`"
+    />
   </div>
 </template>
 
@@ -64,16 +64,17 @@ export default {
   justify-content: center;
   flex: 1;
   display: flex;
-  border: 5px solid #95d89a;
-  background: #e7fff3;
+  border: 5px solid #969696;
+  background: #eaeaea;
   border-radius: 9px;
   opacity: 0.5;
-  height: 120px;
+  height: 160px;
   flex-wrap: wrap;
 }
 
 .card {
   cursor: not-allowed;
+  margin-right: 10px;
 }
 
 .cardSelectable {
@@ -82,7 +83,7 @@ export default {
 }
 
 .cardSelectable:hover {
-  background: #95d89a;
+  margin-top: -15px;
 }
 
 .cardMedium {
@@ -99,5 +100,7 @@ export default {
 
 .current {
   opacity: 1;
+  border-color: #95d89a;
+  background: #e7fff3;
 }
 </style>

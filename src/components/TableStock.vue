@@ -1,6 +1,8 @@
 <template>
   <div :class="$style.stock" :title="$root.game.stockCount">
-    <div :class="$style.cards" v-if="showStockCards"></div>
+    <div :class="$style.cards" v-if="showStockCards">
+      <div :class="$style.back"></div>
+    </div>
     <Card :class="$style.trump" v-if="showTrump" :card="$root.game.trumpCard" />
   </div>
 </template>
@@ -37,22 +39,34 @@ export default {
   position: relative;
   width: 100px;
   height: 100px;
+  margin-top: -100px;
+  margin-left: 30px;
 }
 
 .trump {
   display: inline-block;
-  margin-left: 8px;
-  margin-top: 29px;
+  margin-left: 25px;
+  margin-top: 47px;
 }
 
 .cards {
   position: absolute;
-  height: 60px;
-  width: 90px;
+  height: 91px;
+  width: 135px;
   border: 4px solid #000;
   border-radius: 8px;
   background: #fff;
   z-index: 1;
-  opacity: 0.5;
+  opacity: 1;
+}
+
+.back {
+  position: absolute;
+  top: 7px;
+  bottom: 7px;
+  left: 7px;
+  right: 7px;
+  background: #be68ff;
+  border-radius: 4px;
 }
 </style>

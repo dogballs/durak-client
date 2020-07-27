@@ -35,10 +35,9 @@ export default {
 }
 
 .stock {
-  flex: 0 0 150px;
+  flex: 0 0 200px;
   display: flex;
   align-items: center;
-  justify-content: center;
 }
 
 .field {

@@ -46,7 +46,7 @@ export default {
 }
 
 .card {
-  margin-right: 100px;
+  margin-right: 72px;
 }
 
 .defence {
@@ -54,8 +54,8 @@ export default {
   display: flex;
   top: 30px;
   bottom: 0;
-  left: 60px;
-  right: -60px;
+  left: 40px;
+  right: -40px;
   flex-wrap: wrap;
   align-items: self-start;
 }

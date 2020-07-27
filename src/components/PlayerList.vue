@@ -46,6 +46,6 @@ export default {
 }
 
 .loss {
-  color: #ff4646;
+  color: #ff6363;
 }
 </style>

@@ -48,7 +48,7 @@ export default {
   display: flex;
   flex: 1;
   flex-direction: column;
-  padding: 20px;
+  padding: 10px 20px;
 }
 
 .main {

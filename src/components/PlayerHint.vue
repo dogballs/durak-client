@@ -1,6 +1,12 @@
 <template>
   <div :class="$style.container">
-    {{ text }}
+    <div>
+      {{ text }}
+    </div>
+    <div :class="$style.secondary" v-if="isWaiting">
+      (скопируйте ссылку на игру в адресной строке браузера и поделитесь с
+      друзьями)
+    </div>
   </div>
 </template>
 
@@ -31,6 +37,13 @@ export default {
         return 'Игрок';
       }
       return currentPlayer.name;
+    },
+    isWaiting() {
+      return (
+        this.$root.room.state === 0 ||
+        this.$root.room.state === 1 ||
+        this.$root.room.state === 2
+      );
     },
     text() {
       if (this.$root.room.state === 0) {
@@ -73,9 +86,15 @@ export default {
 
 <style module>
 .container {
-  height: 40px;
+  height: 60px;
   padding: 5px;
   font-size: 26px;
-  color: #ad04d8;
+  color: #008000;
+}
+
+.secondary {
+  color: #828282;
+  margin-top: 5px;
+  font-size: 14px;
 }
 </style>

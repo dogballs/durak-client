@@ -36,7 +36,7 @@
           }"
           v-for="cardIndex in enemy.cardCount"
         >
-          <div :class="$style.inside"></div>
+          <div :class="$style.back"></div>
         </div>
       </div>
     </div>
@@ -62,13 +62,13 @@ export default {
 
 <style module>
 .players {
-  height: 130px;
+  height: 110px;
   display: flex;
   justify-content: space-around;
 }
 
 .player {
-  width: 150px;
+  width: 130px;
   opacity: 0.5;
   position: absolute;
 }
@@ -83,7 +83,7 @@ export default {
 }
 
 .icon {
-  font-size: 80px;
+  font-size: 60px;
   text-align: center;
 }
 
@@ -106,7 +106,7 @@ export default {
   height: 20px;
   width: 12px;
   margin-right: 1px;
-  padding: 1px;
+  position: relative;
 }
 
 .inside {
@@ -116,9 +116,9 @@ export default {
 
 .sign {
   position: absolute;
-  font-size: 30px;
-  top: 51px;
-  left: 63px;
+  font-size: 25px;
+  top: 39px;
+  left: 55px;
 }
 
 .cardSmall {
@@ -133,5 +133,15 @@ export default {
   border-radius: 2px;
   height: 10px;
   width: 5px;
+}
+
+.back {
+  position: absolute;
+  top: 1px;
+  bottom: 1px;
+  left: 1px;
+  right: 1px;
+  background: #be68ff;
+  border-radius: 1px;
 }
 </style>
