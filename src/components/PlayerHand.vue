@@ -19,7 +19,7 @@
         left: `${
           10 -
           $root.hand.cards.length * 0.3 +
-          (index / $root.hand.cards.length) * 60
+          (index / $root.hand.cards.length) * 85
         }%`,
       }"
     />
@@ -74,6 +74,7 @@ export default {
   opacity: 0.5;
   height: 160px;
   flex-wrap: wrap;
+  position: relative;
 }
 
 .card {
@@ -88,22 +89,8 @@ export default {
 }
 
 .cardSelectable:hover {
-  margin-top: -15px;
+  margin-top: -60px;
 }
-
-/*.cardMedium {
-  width: 70px;
-  height: 104px;
-  background-size: 1000px;
-}
-
-.cardSmall {
-  font-size: 50px;
-}
-
-.cardTiny {
-  font-size: 40px;
-}*/
 
 .current {
   opacity: 1;

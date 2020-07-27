@@ -122,17 +122,17 @@ export default {
 }
 
 .cardSmall {
-  border: 3px solid #000;
+  border: 2px solid #000;
   border-radius: 3px;
-  height: 15px;
-  width: 7px;
+  height: 17px;
+  width: 9px;
 }
 
 .cardTiny {
-  border: 3px solid #000;
+  border: 1px solid #000;
   border-radius: 2px;
-  height: 10px;
-  width: 5px;
+  height: 14px;
+  width: 7px;
 }
 
 .back {
