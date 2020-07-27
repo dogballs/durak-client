@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.app">
-    <ConnectionStatus />
+    <ConnectionStatus v-if="!$root.isConnectionCompleted" />
     <div v-if="$root.isConnectionCompleted">
       <PlayerHint />
       <div :class="$style.content">

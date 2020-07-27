@@ -9,8 +9,8 @@ import RoomPage from './components/RoomPage';
 import ConnectionStatus from './components/ConnectionStatus';
 
 const routes = [
-  { path: '/', component: HomePage },
-  { path: '/room/:id', component: RoomPage },
+  { path: '/', name: 'home', component: HomePage },
+  { path: '/room/:id', name: 'room', component: RoomPage },
 ];
 
 const router = new VueRouter({
@@ -26,42 +26,46 @@ const ConnectionState = {
 
 Vue.use(VueRouter);
 
+function getInitialState() {
+  return {
+    room: {
+      state: 0,
+      players: [],
+    },
+    game: {
+      players: [],
+      state: 0,
+      trumpCard: null,
+      stockCount: 0,
+      discardCount: 0,
+      attackerId: -1,
+      defenderId: -1,
+      passerId: -1,
+      currentId: -1,
+      round: {
+        attackCards: [],
+        defenceCards: [],
+      },
+    },
+    enemies: [],
+    player: {
+      id: -1,
+      role: 2,
+    },
+    hand: {
+      cards: [],
+    },
+    messages: [],
+    ws: null,
+    state: ConnectionState.Idle,
+  };
+}
+
 const app = new Vue({
   router,
 
   data() {
-    return {
-      room: {
-        state: 0,
-        players: [],
-      },
-      game: {
-        players: [],
-        state: 0,
-        trumpCard: null,
-        stockCount: 0,
-        discardCount: 0,
-        attackerId: -1,
-        defenderId: -1,
-        passerId: -1,
-        currentId: -1,
-        round: {
-          attackCards: [],
-          defenceCards: [],
-        },
-      },
-      enemies: [],
-      player: {
-        id: -1,
-        role: 2,
-      },
-      hand: {
-        cards: [],
-      },
-      messages: [],
-      ws: null,
-      state: ConnectionState.Idle,
-    };
+    return getInitialState();
   },
 
   computed: {
@@ -128,9 +132,14 @@ const app = new Vue({
 
   methods: {
     connect() {
-      if (this.state !== ConnectionState.Idle) {
+      if (this.isConnectionInitiating || this.isConnectionCompleted) {
         return;
       }
+
+      if (this.isConnectionFailed) {
+        Object.assign(this.$data, getInitialState());
+      }
+
       this.state = ConnectionState.Initiating;
 
       const parts = window.location.hash.split('/');

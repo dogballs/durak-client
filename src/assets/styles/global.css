@@ -6,6 +6,7 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
+  color: #444;
 }
 
 body {
@@ -83,4 +84,35 @@ h3 {
 
 :global(.card-rank-14) {
   background-position-x: -8px;
+}
+
+:global(.avatar-asia) {
+  background: url('../images/users/asia.png');
+}
+:global(.avatar-carpenter) {
+  background: url('../images/users/carpenter.png');
+}
+:global(.avatar-diver) {
+  background: url('../images/users/diver.png');
+}
+:global(.avatar-female) {
+  background: url('../images/users/female.png');
+}
+:global(.avatar-jason) {
+  background: url('../images/users/jason.png');
+}
+:global(.avatar-nerd-glasses) {
+  background: url('../images/users/nerd-glasses.png');
+}
+:global(.avatar-pirate) {
+  background: url('../images/users/pirate.png');
+}
+:global(.avatar-uncle) {
+  background: url('../images/users/uncle.png');
+}
+:global(.avatar-user) {
+  background: url('../images/users/user.png');
+}
+:global(.avatar-woman) {
+  background: url('../images/users/woman.png');
 }

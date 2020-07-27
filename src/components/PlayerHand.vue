@@ -10,17 +10,14 @@
       :class="{
         [$style.card]: true,
         [$style.cardSelectable]: $root.isPlayerCurrent,
+        [$style.alot]: $root.hand.cards.length >= 12,
       }"
       :card="card"
       @click.native="select(card)"
       v-for="(card, index) in $root.hand.cards"
       :key="`${card.suite}-${card.rank}`"
       :style="{
-        left: `${
-          10 -
-          $root.hand.cards.length * 0.3 +
-          (index / $root.hand.cards.length) * 85
-        }%`,
+        left: `${getLeftPosition(index)}%`,
       }"
     />
   </div>
@@ -34,22 +31,6 @@ export default {
     Card,
   },
 
-  computed: {
-    isCardMedium() {
-      return (
-        this.$root.hand.cards.length >= 9 && this.$root.hand.cards.length < 14
-      );
-    },
-    isCardSmall() {
-      return (
-        this.$root.hand.cards.length >= 14 && this.$root.hand.cards.length < 16
-      );
-    },
-    isCardTiny() {
-      return this.$root.hand.cards.length >= 16;
-    },
-  },
-
   methods: {
     select(card) {
       if (!this.$root.isPlayerCurrent) {
@@ -57,6 +38,15 @@ export default {
       }
 
       this.$root.ws.send(JSON.stringify({ id: 'act', card }));
+    },
+    getLeftPosition(index) {
+      const size = this.$root.hand.cards.length;
+
+      if (size <= 6) {
+        return 15 * (6 / size) + index * 12;
+      }
+
+      return 10 - size * 0.3 + (index / size) * 85;
     },
   },
 };
@@ -89,6 +79,10 @@ export default {
 }
 
 .cardSelectable:hover {
+  margin-top: -15px;
+}
+
+.alot:hover {
   margin-top: -60px;
 }
 

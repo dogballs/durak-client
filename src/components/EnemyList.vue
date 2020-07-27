@@ -8,15 +8,7 @@
         }"
         v-for="(enemy, index) in enemyPlayers"
       >
-        <div :class="$style.icon">
-          &#x1F464;
-        </div>
-        <span :class="$style.sign" v-if="enemy.id === $root.game.attackerId"
-          >&#9876;</span
-        >
-        <span :class="$style.sign" v-if="enemy.id === $root.game.defenderId"
-          >&#128737;</span
-        >
+        <div :class="[$style.avatar, getImageClassName(enemy.id)]"></div>
         <div :class="$style.name">
           {{ enemy.name }}
         </div>
@@ -36,7 +28,12 @@
           }"
           v-for="cardIndex in enemy.cardCount"
         >
-          <div :class="$style.back"></div>
+          <div
+            :class="{
+              [$style.back]: true,
+              [$style.backCurrent]: enemy.id === $root.game.currentId,
+            }"
+          ></div>
         </div>
       </div>
     </div>
@@ -44,6 +41,19 @@
 </template>
 
 <script>
+const IMAGE_CLASS_NAMES = [
+  'avatar-asia',
+  'avatar-carpenter',
+  'avatar-nerd-glasses',
+  'avatar-female',
+  'avatar-uncle',
+  'avatar-jason',
+  'avatar-pirate',
+  'avatar-woman',
+  'avatar-user',
+  'avatar-diver',
+];
+
 export default {
   computed: {
     enemyPlayers() {
@@ -55,6 +65,15 @@ export default {
       return this.$root.game.players.filter((player) => {
         return player.id !== this.$root.player.id && player.role !== 2;
       });
+    },
+  },
+  methods: {
+    getImageClassName(id) {
+      const roomIndex = this.$root.room.players.findIndex(
+        (player) => player.id === id,
+      );
+      const imageName = IMAGE_CLASS_NAMES[roomIndex];
+      return imageName;
     },
   },
 };
@@ -82,9 +101,11 @@ export default {
   text-align: center;
 }
 
-.icon {
-  font-size: 60px;
-  text-align: center;
+.avatar {
+  height: 90px;
+  width: 90px;
+  margin-left: 16px;
+  background-size: contain;
 }
 
 .hands {
@@ -141,7 +162,11 @@ export default {
   bottom: 1px;
   left: 1px;
   right: 1px;
-  background: #be68ff;
+  background: #ccc;
   border-radius: 1px;
+}
+
+.backCurrent {
+  background: #be68ff;
 }
 </style>

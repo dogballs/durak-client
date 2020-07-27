@@ -11,6 +11,26 @@
     <div :class="$style.error" v-if="hasError">
       Ошибка при создании игры
     </div>
+
+    <div :class="$style.attribution">
+      <div>
+        Playing cards image made by
+        <a href="https://pixabay.com/users/wikimediaimages-1185597/"
+          >WikimediaImages</a
+        >
+        from <a href="https://pixabay.com">pixabay.com</a>
+      </div>
+      <div>
+        User icons made by
+        <a href="https://www.flaticon.com/authors/xnimrodx" title="xnimrodx"
+          >xnimrodx</a
+        >
+        from
+        <a href="https://www.flaticon.com/" title="Flaticon"
+          >www.flaticon.com</a
+        >
+      </div>
+    </div>
   </div>
 </template>
 
@@ -103,5 +123,9 @@ export default {
   margin-top: 20px;
   color: #ff6363;
   font-size: 18px;
+}
+
+.attribution {
+  margin-top: 300px;
 }
 </style>
