@@ -70,7 +70,7 @@ export default {
 .player {
   width: 130px;
   opacity: 0.5;
-  position: absolute;
+  position: relative;
 }
 
 .current {
