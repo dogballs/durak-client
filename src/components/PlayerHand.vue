@@ -10,14 +10,18 @@
       :class="{
         [$style.card]: true,
         [$style.cardSelectable]: $root.isPlayerCurrent,
-        [$style.cardMedium]: isCardMedium,
-        [$style.cardSmall]: isCardSmall,
-        [$style.cardTiny]: isCardTiny,
       }"
       :card="card"
       @click.native="select(card)"
-      v-for="card in $root.hand.cards"
+      v-for="(card, index) in $root.hand.cards"
       :key="`${card.suite}-${card.rank}`"
+      :style="{
+        left: `${
+          10 -
+          $root.hand.cards.length * 0.3 +
+          (index / $root.hand.cards.length) * 60
+        }%`,
+      }"
     />
   </div>
 </template>
@@ -33,7 +37,7 @@ export default {
   computed: {
     isCardMedium() {
       return (
-        this.$root.hand.cards.length >= 11 && this.$root.hand.cards.length < 14
+        this.$root.hand.cards.length >= 9 && this.$root.hand.cards.length < 14
       );
     },
     isCardSmall() {
@@ -75,6 +79,7 @@ export default {
 .card {
   cursor: not-allowed;
   margin-right: 10px;
+  position: absolute;
 }
 
 .cardSelectable {
@@ -86,8 +91,10 @@ export default {
   margin-top: -15px;
 }
 
-.cardMedium {
-  font-size: 60px;
+/*.cardMedium {
+  width: 70px;
+  height: 104px;
+  background-size: 1000px;
 }
 
 .cardSmall {
@@ -96,7 +103,7 @@ export default {
 
 .cardTiny {
   font-size: 40px;
-}
+}*/
 
 .current {
   opacity: 1;

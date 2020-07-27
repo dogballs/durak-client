@@ -6,7 +6,7 @@
           [$style.player]: true,
           [$style.current]: enemy.id === $root.game.currentId,
         }"
-        v-for="enemy in enemyPlayers"
+        v-for="(enemy, index) in enemyPlayers"
       >
         <div :class="$style.icon">
           &#x1F464;

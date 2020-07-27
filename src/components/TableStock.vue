@@ -1,5 +1,8 @@
 <template>
   <div :class="$style.stock" :title="$root.game.stockCount">
+    <div :class="$style.title" v-if="$root.isRoomPlaying">
+      Колода: {{ $root.game.stockCount }}
+    </div>
     <div :class="$style.cards" v-if="showStockCards">
       <div :class="$style.back"></div>
     </div>
@@ -43,6 +46,11 @@ export default {
   margin-left: 30px;
 }
 
+.title {
+  color: #fff;
+  margin-bottom: 10px;
+}
+
 .trump {
   display: inline-block;
   margin-left: 25px;
@@ -51,8 +59,8 @@ export default {
 
 .cards {
   position: absolute;
-  height: 91px;
-  width: 135px;
+  height: 90px;
+  width: 134px;
   border: 4px solid #000;
   border-radius: 8px;
   background: #fff;
