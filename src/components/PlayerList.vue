@@ -9,9 +9,9 @@
         }"
         v-for="player in $root.room.players"
       >
-        {{ player.name }} ({{ displayRole(player) }})
-        <span v-if="player.id === $root.game.attackerId">&#9876;</span>
-        <span v-if="player.id === $root.game.defenderId">&#128737;</span>
+        {{ player.name }} (<PlayerRole :role="player.role" />)
+        <span v-if="player.id === $root.game.attackerId">(атк.)</span>
+        <span v-if="player.id === $root.game.defenderId">(защ.)</span>
         -
         <span :class="$style.loss">{{ player.lossCount }}</span>
       </li>
@@ -20,18 +20,11 @@
 </template>
 
 <script>
+import PlayerRole from './PlayerRole';
+
 export default {
-  methods: {
-    displayRole(player) {
-      switch (player.role) {
-        case 0:
-          return 'Хост';
-        case 1:
-          return 'Игрок';
-        case 2:
-          return 'Наблюдатель';
-      }
-    },
+  components: {
+    PlayerRole,
   },
 };
 </script>

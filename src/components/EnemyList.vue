@@ -8,7 +8,7 @@
         }"
         v-for="(enemy, index) in enemyPlayers"
       >
-        <div :class="[$style.avatar, getImageClassName(enemy.id)]"></div>
+        <PlayerAvatar :class="$style.avatar" :id="enemy.id" />
         <div :class="$style.name">
           {{ enemy.name }}
         </div>
@@ -41,20 +41,12 @@
 </template>
 
 <script>
-const IMAGE_CLASS_NAMES = [
-  'avatar-asia',
-  'avatar-carpenter',
-  'avatar-nerd-glasses',
-  'avatar-female',
-  'avatar-uncle',
-  'avatar-jason',
-  'avatar-pirate',
-  'avatar-woman',
-  'avatar-user',
-  'avatar-diver',
-];
+import PlayerAvatar from './PlayerAvatar';
 
 export default {
+  components: {
+    PlayerAvatar,
+  },
   computed: {
     enemyPlayers() {
       const players = this.$root.isRoomPlaying
@@ -79,15 +71,6 @@ export default {
       ];
 
       return enemies;
-    },
-  },
-  methods: {
-    getImageClassName(id) {
-      const roomIndex = this.$root.room.players.findIndex(
-        (player) => player.id === id,
-      );
-      const imageName = IMAGE_CLASS_NAMES[roomIndex];
-      return imageName;
     },
   },
 };
@@ -116,10 +99,7 @@ export default {
 }
 
 .avatar {
-  height: 90px;
-  width: 90px;
   margin-left: 16px;
-  background-size: contain;
 }
 
 .hands {

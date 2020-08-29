@@ -18,6 +18,11 @@ h3 {
   color: #828282;
 }
 
+ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
 :global(.card-suite-1) {
   background-position-y: -291px;
 }

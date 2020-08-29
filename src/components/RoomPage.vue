@@ -2,9 +2,9 @@
   <div :class="$style.app">
     <ConnectionStatus v-if="!$root.isConnectionCompleted" />
     <div v-if="$root.isConnectionCompleted">
-      <PlayerHint />
       <div :class="$style.content">
         <div :class="$style.main">
+          <PlayerHint />
           <EnemyList />
           <Table />
           <PlayerHand :class="$style.hand" v-if="$root.isRoomPlaying" />
