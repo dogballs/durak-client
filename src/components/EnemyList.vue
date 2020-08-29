@@ -57,14 +57,28 @@ const IMAGE_CLASS_NAMES = [
 export default {
   computed: {
     enemyPlayers() {
-      if (!this.$root.isRoomPlaying) {
-        return this.$root.room.players.filter((player) => {
-          return player.id !== this.$root.player.id && player.role !== 2;
-        });
-      }
-      return this.$root.game.players.filter((player) => {
-        return player.id !== this.$root.player.id && player.role !== 2;
+      const players = this.$root.isRoomPlaying
+        ? this.$root.game.players
+        : this.$root.room.players;
+
+      const notObservers = players.filter((player) => {
+        return player.role !== 2;
       });
+
+      const selfIndex = notObservers.findIndex((player) => {
+        return player.id == this.$root.player.id;
+      });
+
+      if (selfIndex === -1) {
+        return notObservers;
+      }
+
+      const enemies = [
+        ...notObservers.slice(selfIndex + 1),
+        ...notObservers.slice(0, selfIndex),
+      ];
+
+      return enemies;
     },
   },
   methods: {
