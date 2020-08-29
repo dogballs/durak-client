@@ -24,6 +24,8 @@ const ConnectionState = {
   Completed: 3,
 };
 
+const PING_INTERVAL = 15000;
+
 Vue.use(VueRouter);
 
 function getInitialState() {
@@ -129,6 +131,16 @@ const app = new Vue({
     isConnectionCompleted() {
       return this.state === ConnectionState.Completed;
     },
+  },
+
+  mounted() {
+    setInterval(() => {
+      if (!this.isConnectionCompleted) {
+        return;
+      }
+
+      this.ws.send(JSON.stringify({ id: 'ping' }));
+    }, PING_INTERVAL);
   },
 
   methods: {
