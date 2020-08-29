@@ -42,8 +42,16 @@ export default {
     getLeftPosition(index) {
       const size = this.$root.hand.cards.length;
 
+      if (size === 1) {
+        return 45;
+      }
+
+      if (size === 2) {
+        return 13 * (6 / size) + index * 12;
+      }
+
       if (size <= 6) {
-        return 15 * (6 / size) + index * 12;
+        return 16 * (6 / size) + index * 12;
       }
 
       return 10 - size * 0.3 + (index / size) * 85;
