@@ -134,5 +134,12 @@ export default {
   opacity: 1;
   border-color: #95d89a;
   background: #e7fff3;
+  animation: blink-animation 1s steps(5, start) infinite;
+}
+
+@keyframes blink-animation {
+  to {
+    border-color: #00a1ff;
+  }
 }
 </style>
