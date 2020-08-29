@@ -10,11 +10,11 @@
       :class="{
         [$style.card]: true,
         [$style.cardSelectable]: $root.isPlayerCurrent,
-        [$style.alot]: $root.hand.cards.length >= 12,
+        [$style.alot]: sortedCards.length >= 12,
       }"
       :card="card"
       @click.native="select(card)"
-      v-for="(card, index) in $root.hand.cards"
+      v-for="(card, index) in sortedCards"
       :key="`${card.suite}-${card.rank}`"
       :style="{
         left: `${getLeftPosition(index)}%`,
@@ -26,9 +26,45 @@
 <script>
 import Card from './Card';
 
+const SUITE_ORDER = [2, 1, 3, 4];
+
 export default {
   components: {
     Card,
+  },
+
+  computed: {
+    sortedCards() {
+      if (this.$root.handSort === 0) {
+        return this.$root.hand.cards;
+      }
+
+      const order = SUITE_ORDER.slice();
+
+      const trumpIndex = SUITE_ORDER.indexOf(this.$root.game.trumpCard.suite);
+      order.splice(trumpIndex, 1);
+
+      if (this.$root.handSort === 1) {
+        order.unshift(this.$root.game.trumpCard.suite);
+      } else if (this.$root.handSort === 2) {
+        order.push(this.$root.game.trumpCard.suite);
+      }
+
+      const cards = this.$root.hand.cards.slice();
+
+      cards.sort((card1, card2) => {
+        const suiteIndex1 = order.indexOf(card1.suite);
+        const suiteIndex2 = order.indexOf(card2.suite);
+
+        if (suiteIndex1 === suiteIndex2) {
+          return card1.rank < card2.rank ? -1 : 1;
+        }
+
+        return suiteIndex1 < suiteIndex2 ? -1 : 1;
+      });
+
+      return cards;
+    },
   },
 
   methods: {

@@ -7,7 +7,22 @@
         {{ $root.player.name }} (<PlayerRole :role="$root.player.role" />)
       </strong>
     </div>
-    <div>Проигрышей: {{ $root.player.lossCount }}</div>
+    <div>
+      Проигрышей: <span :class="$style.loss">{{ $root.player.lossCount }}</span>
+    </div>
+    <div :class="$style.sortContainer">
+      Сортировать карты:
+      <div v-for="option in sortOptions">
+        <input
+          type="radio"
+          name="hand-sort"
+          v-model="$root.handSort"
+          :value="option.value"
+          :class="$style.radio"
+        />
+        {{ option.title }}
+      </div>
+    </div>
   </div>
 </template>
 
@@ -20,6 +35,25 @@ export default {
     PlayerAvatar,
     PlayerRole,
   },
+
+  data() {
+    return {
+      sortOptions: [
+        {
+          title: 'без сортировки',
+          value: 0,
+        },
+        {
+          title: 'по масти (б/к/ч/п), козыри в начале',
+          value: 1,
+        },
+        {
+          title: 'по масти (б/к/ч/п), козыри в конце',
+          value: 2,
+        },
+      ],
+    };
+  },
 };
 </script>
 
@@ -30,6 +64,19 @@ export default {
 }
 
 .name {
+  margin-top: 10px;
+}
+
+.loss {
+  color: #ff6363;
+}
+
+.radio {
+  vertical-align: middle;
+  margin-top: -2px;
+}
+
+.sortContainer {
   margin-top: 10px;
 }
 </style>

@@ -55,6 +55,7 @@ function getInitialState() {
     hand: {
       cards: [],
     },
+    handSort: 0,
     messages: [],
     ws: null,
     state: ConnectionState.Idle,
