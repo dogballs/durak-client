@@ -16,7 +16,7 @@
 }
 
 .list {
-  max-height: 300px;
+  max-height: 200px;
   overflow-y: auto;
 }
 </style>

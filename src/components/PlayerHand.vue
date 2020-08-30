@@ -39,29 +39,56 @@ export default {
         return this.$root.hand.cards;
       }
 
-      const order = SUITE_ORDER.slice();
+      let cards = this.$root.hand.cards.slice();
 
+      const order = SUITE_ORDER.slice();
       const trumpIndex = SUITE_ORDER.indexOf(this.$root.game.trumpCard.suite);
       order.splice(trumpIndex, 1);
 
-      if (this.$root.handSort === 1) {
+      if (this.$root.handSort === 1 || this.$root.handSort === 3) {
         order.unshift(this.$root.game.trumpCard.suite);
-      } else if (this.$root.handSort === 2) {
+      } else if (this.$root.handSort === 2 || this.$root.handSort === 4) {
         order.push(this.$root.game.trumpCard.suite);
       }
 
-      const cards = this.$root.hand.cards.slice();
+      if (this.$root.handSort === 1 || this.$root.handSort === 2) {
+        cards.sort((card1, card2) => {
+          const suiteIndex1 = order.indexOf(card1.suite);
+          const suiteIndex2 = order.indexOf(card2.suite);
 
-      cards.sort((card1, card2) => {
-        const suiteIndex1 = order.indexOf(card1.suite);
-        const suiteIndex2 = order.indexOf(card2.suite);
+          if (suiteIndex1 === suiteIndex2) {
+            return card1.rank < card2.rank ? -1 : 1;
+          }
 
-        if (suiteIndex1 === suiteIndex2) {
+          return suiteIndex1 < suiteIndex2 ? -1 : 1;
+        });
+      } else if (this.$root.handSort === 3 || this.$root.handSort === 4) {
+        const trumpCards = cards.filter((card) => {
+          return card.suite === this.$root.game.trumpCard.suite;
+        });
+        trumpCards.sort((card1, card2) => {
           return card1.rank < card2.rank ? -1 : 1;
+        });
+
+        const restCards = cards.filter((card) => {
+          return card.suite !== this.$root.game.trumpCard.suite;
+        });
+        restCards.sort((card1, card2) => {
+          return card1.rank < card2.rank ? -1 : 1;
+        });
+
+        if (this.$root.handSort === 3) {
+          restCards.unshift(...trumpCards);
+        } else if (this.$root.handSort === 4) {
+          restCards.push(...trumpCards);
         }
 
-        return suiteIndex1 < suiteIndex2 ? -1 : 1;
-      });
+        cards = restCards;
+      } else if (this.$root.handSort === 5) {
+        cards.sort((card1, card2) => {
+          return card1.rank < card2.rank ? -1 : 1;
+        });
+      }
 
       return cards;
     },
