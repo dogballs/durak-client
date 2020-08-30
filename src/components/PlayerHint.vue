@@ -62,14 +62,20 @@ export default {
         return `Игра закончена - "${this.loserPlayerName} проиграл"`;
       }
       if (this.$root.game.currentId === this.$root.game.attackerId) {
-        if (this.$root.game.state === 2) {
+        if (this.$root.isGameTake) {
           return `"${this.defenderPlayerName}" решил взять. "${this.currentPlayerName}" может подкинуть...`;
+        }
+        if (this.$root.isGameDefenceShowcase) {
+          return `"${this.defenderPlayerName}" отбился. "${this.currentPlayerName}" подтверждает...`;
         }
         return `"${this.currentPlayerName}" акаткует...`;
       }
       if (this.$root.game.currentId === this.$root.game.passerId) {
-        if (this.$root.game.state === 2) {
+        if (this.$root.isGameTake) {
           return `"${this.defenderPlayerName}" решил взять. "${this.currentPlayerName}" тоже может подкинуть...`;
+        }
+        if (this.$root.isGameDefenceShowcase) {
+          return `"${this.defenderPlayerName}" отбился. "${this.currentPlayerName}" подтверждает...`;
         }
         return `"${this.currentPlayerName}" помогает атаке...`;
       }

@@ -2,7 +2,7 @@
   <div :class="$style.container">
     <button :class="$style.button" @click="take" v-if="canTake">Взять</button>
     <button :class="$style.button" @click="pass" v-if="canPass">
-      Пропустить
+      {{ passText }}
     </button>
   </div>
 </template>
@@ -10,6 +10,12 @@
 <script>
 export default {
   computed: {
+    passText() {
+      if (this.$root.isGameDefenceShowcase) {
+        return 'Хорошо';
+      }
+      return 'Пропустить';
+    },
     canTake() {
       return (
         this.$root.isRoomPlaying &&

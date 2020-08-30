@@ -73,27 +73,34 @@ const app = new Vue({
 
   computed: {
     canStartGame() {
-      return this.isPlayerHost && this.room.state === 2;
+      return this.isPlayerHost && this.isRoomWaitingForStart;
     },
     canStopGame() {
       if (this.canEndGame) {
         return false;
       }
-      return this.isPlayerHost && this.room.state === 3;
+      return this.isPlayerHost && this.isRoomPlaying;
     },
     canEndGame() {
-      return (
-        this.isPlayerHost && this.room.state === 3 && this.game.state === 3
-      );
+      return this.isPlayerHost && this.isRoomPlaying && this.isGameEnded;
+    },
+    isRoomWaitingForStart() {
+      return this.room.state === 2;
     },
     isRoomPlaying() {
       return this.room.state === 3;
     },
+    isGameAttack() {
+      return this.game.state === 1;
+    },
     isGameTake() {
       return this.game.state === 2;
     },
-    isGameEnded() {
+    isGameDefenceShowcase() {
       return this.game.state === 3;
+    },
+    isGameEnded() {
+      return this.game.state === 4;
     },
     isGameLoss() {
       return this.isGameEnded && this.game.players.length === 1;
