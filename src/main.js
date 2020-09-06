@@ -49,7 +49,7 @@ function getInitialState() {
         defenceCards: [],
       },
     },
-    enemies: [],
+    counters: [],
     player: {
       id: -1,
       role: 2,
@@ -215,7 +215,7 @@ const app = new Vue({
 
         if (message.id === 'game') {
           this.game = message.game;
-          this.enemies = message.enemies;
+          this.counters = message.counters;
           this.hand = message.hand;
           this.player = message.player;
         }

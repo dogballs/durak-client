@@ -17,21 +17,22 @@
     <div :class="$style.hands">
       <div
         :class="$style.hand"
-        v-for="enemy in $root.enemies"
-        :title="enemy.cardCount"
+        v-for="enemyCounter in enemyCounters"
+        :title="enemyCounter.cardCount"
       >
         <div
           :class="{
             [$style.card]: true,
-            [$style.cardSmall]: enemy.cardCount > 15 && enemy.cardCount <= 20,
-            [$style.cardTiny]: enemy.cardCount > 20,
+            [$style.cardSmall]:
+              enemyCounter.cardCount > 15 && enemyCounter.cardCount <= 20,
+            [$style.cardTiny]: enemyCounter.cardCount > 20,
           }"
-          v-for="cardIndex in enemy.cardCount"
+          v-for="cardIndex in enemyCounter.cardCount"
         >
           <div
             :class="{
               [$style.back]: true,
-              [$style.backCurrent]: enemy.id === $root.game.currentId,
+              [$style.backCurrent]: enemyCounter.id === $root.game.currentId,
             }"
           ></div>
         </div>
@@ -71,6 +72,24 @@ export default {
       ];
 
       return enemies;
+    },
+    enemyCounters() {
+      const counters = this.$root.counters;
+
+      const selfIndex = counters.findIndex((counter) => {
+        return counter.id === this.$root.player.id;
+      });
+
+      if (selfIndex === -1) {
+        return counters;
+      }
+
+      const enemyCounters = [
+        ...counters.slice(selfIndex + 1),
+        ...counters.slice(0, selfIndex),
+      ];
+
+      return enemyCounters;
     },
   },
 };
