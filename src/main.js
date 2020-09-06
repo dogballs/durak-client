@@ -146,7 +146,7 @@ const app = new Vue({
         return;
       }
 
-      this.ws.send(JSON.stringify({ id: 'ping' }));
+      window.fetch(`${process.env.API_BASE_URL}/health`);
     }, PING_INTERVAL);
   },
 
