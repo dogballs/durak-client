@@ -54,22 +54,22 @@ export default {
         ? this.$root.game.players
         : this.$root.room.players;
 
-      const notObservers = players.filter((player) => {
-        return player.role !== 2;
-      });
-
-      const selfIndex = notObservers.findIndex((player) => {
+      const selfIndex = players.findIndex((player) => {
         return player.id == this.$root.player.id;
       });
 
       if (selfIndex === -1) {
-        return notObservers;
+        return players.filter((counter) => {
+          return counter.role !== 2;
+        });
       }
 
       const enemies = [
-        ...notObservers.slice(selfIndex + 1),
-        ...notObservers.slice(0, selfIndex),
-      ];
+        ...players.slice(selfIndex + 1),
+        ...players.slice(0, selfIndex),
+      ].filter((counter) => {
+        return counter.role !== 2;
+      });
 
       return enemies;
     },
@@ -81,13 +81,17 @@ export default {
       });
 
       if (selfIndex === -1) {
-        return counters;
+        return counters.filter((counter) => {
+          return counter.role !== 2;
+        });
       }
 
       const enemyCounters = [
         ...counters.slice(selfIndex + 1),
         ...counters.slice(0, selfIndex),
-      ];
+      ].filter((counter) => {
+        return counter.role !== 2;
+      });
 
       return enemyCounters;
     },
