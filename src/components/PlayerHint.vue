@@ -68,7 +68,7 @@ export default {
         if (this.$root.isGameDefenceShowcase) {
           return `"${this.defenderPlayerName}" отбился. "${this.currentPlayerName}" подтверждает...`;
         }
-        return `"${this.currentPlayerName}" акаткует...`;
+        return `"${this.currentPlayerName}" атакует...`;
       }
       if (this.$root.game.currentId === this.$root.game.passerId) {
         if (this.$root.isGameTake) {
