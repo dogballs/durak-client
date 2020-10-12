@@ -90,6 +90,9 @@ const app = new Vue({
     isRoomPlaying() {
       return this.room.state === 3;
     },
+    isGameIdle() {
+      return this.game.state === 0;
+    },
     isGameAttack() {
       return this.game.state === 1;
     },
