@@ -101,7 +101,7 @@ export default {
   z-index: 20;
   left: 0;
   border-radius: 5px;
-  width: 200px;
+  width: 300px;
   box-shadow: 2px 2px 5px 1px #ffb0f9;
 }
 

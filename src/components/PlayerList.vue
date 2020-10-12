@@ -14,7 +14,7 @@
             @click="moveUp(player.id)"
             :disabled="!$root.isGameIdle || index === 0"
           >
-            Поменять местами с пред.
+            Поменять местами с предыдущим
           </DropdownItem>
           <DropdownItem
             @click="moveDown(player.id)"
@@ -22,7 +22,13 @@
               !$root.isGameIdle || index === $root.room.players.length - 1
             "
           >
-            Поменять местами со след.
+            Поменять местами со следующим
+          </DropdownItem>
+          <DropdownItem
+            @click="setLossCount(player.id)"
+            :disabled="!$root.isGameIdle"
+          >
+            Изменить количество проигрышей
           </DropdownItem>
         </Dropdown>
         {{ player.name }} (<PlayerRole :role="player.role" />)
@@ -56,6 +62,20 @@ export default {
 
     moveDown(playerId) {
       this.$root.ws.send(JSON.stringify({ id: 'playerMoveDown', playerId }));
+    },
+
+    setLossCount(playerId) {
+      const text = window.prompt('Количество проигрышей:', 0);
+
+      const lossCount = Number(text);
+
+      if (isNaN(lossCount)) {
+        return;
+      }
+
+      this.$root.ws.send(
+        JSON.stringify({ id: 'playerSetLossCount', playerId, lossCount }),
+      );
     },
   },
 };
