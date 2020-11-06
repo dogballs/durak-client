@@ -19,6 +19,9 @@ export default {
   },
   computed: {
     hasStockLeft() {
+      return this.$root.game.stockCount > 1;
+    },
+    hasTrumpLeft() {
       return this.$root.game.stockCount > 0;
     },
     showStockCards() {
@@ -29,7 +32,7 @@ export default {
     },
     showTrump() {
       if (this.$root.isRoomPlaying) {
-        return this.hasStockLeft;
+        return this.hasTrumpLeft;
       }
       return false;
     },
@@ -42,7 +45,7 @@ export default {
   position: relative;
   width: 100px;
   height: 100px;
-  margin-top: -100px;
+  margin-top: -160px;
   margin-left: 30px;
 }
 

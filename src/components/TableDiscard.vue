@@ -27,7 +27,7 @@ export default {
   position: relative;
   width: 100px;
   height: 100px;
-  margin-top: -100px;
+  margin-top: -160px;
 }
 
 .title {
